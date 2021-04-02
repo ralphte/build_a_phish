@@ -1,0 +1,37 @@
+---
+- name: Deploy Terraform
+  hosts: localhost
+  gather_facts: true
+  connection: local
+  vars_files:
+    - ../vars/all.yml
+    - ../vars/phish.yml
+  vars: 
+  - deploy: true
+  tasks:
+  - name: Create a keys directory 
+    ansible.builtin.file:
+      path: ../keys
+      state: absent
+  tags: [ never, phish ]
+
+- name: Destroy Terraform
+  hosts: localhost
+  gather_facts: true
+  connection: local
+  vars_files:
+    - ../vars/all.yml
+    - ../vars/phish.yml
+  vars: 
+  - deploy: false
+  tasks:
+  - name: roles
+    include_role:
+      name: '{{ roleinputvar }}'
+    loop:
+      - digitalocean
+      - azure
+      # - mailgun
+    loop_control:
+      loop_var: roleinputvar
+    tags: [ never, phish ]

@@ -1,0 +1,63 @@
+---
+# This role takes advantage of Ansible's user role.
+# All user related properties will fall back to Ansible's default values.
+# @see http://docs.ansible.com/ansible/user_module.html
+#
+# users:
+#   - username: foobar              (required)
+#     name: Foo Bar
+#     uid: 1000
+#     group: staff
+#     password: xxxxx               (a hash created with: mkpasswd)
+#     groups: ["adm", "www-data"]
+#     append: no                    (only append groups, leave others)
+#     home_mode: "0750"
+#     home_create: yes
+#     home: /path/to/user/home
+#     home_files:
+#       - "/path/to/user/home/.bashrc"
+#       - "/path/to/user/home/.bash_profile"
+#     system: no
+#     authorized_keys:
+#       - "xxx"
+#       - "{{ lookup('file', '/path/to/id_rsa.pub') }}"
+#     authorized_keys_exclusive: yes
+#     ssh_key_type: rsa
+#     ssh_key_bits: 2048
+#     ssh_key_password: ""
+#     ssh_key_generate: no
+#     ssh_key: "xxx" or "{{ lookup('file', '/path/to/id_rsa') }}"
+#     ssh_keys:
+#       id_rsa_1: "xxx" or "{{ lookup('file', '/path/to/id_rsa') }}"
+#       id_rsa_2: "xxx" or "{{ lookup('file', '/path/to/id_rsa') }}"
+#     shell: /bin/bash
+#     update_password: always
+#
+# users_remove:
+#   - foobar
+#   - { username: foobar, remove: no }
+
+# list of users to add
+users: []
+# default user's dotfiles
+users_home_files: []
+# users home directory
+users_home: /home
+# create user's home directory
+users_home_create: yes
+# default user's primary group for users
+users_group:
+# default user's secondary groups
+users_groups: []
+# default user's home directory permissions
+users_home_mode: "0755"
+# default user login shell
+#users_shell:
+# default user's ssh key type
+users_ssh_key_type: rsa
+# default user's ssh key bits
+users_ssh_key_bits: 2048
+# default user's setting for authorized keys exclusive
+users_authorized_keys_exclusive: no
+# list of users to be removed
+users_remove: []

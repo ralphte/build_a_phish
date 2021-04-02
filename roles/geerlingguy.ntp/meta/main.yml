@@ -1,0 +1,37 @@
+---
+dependencies: []
+
+galaxy_info:
+  author: geerlingguy
+  description: NTP installation and configuration for Linux.
+  company: "Midwestern Mac, LLC"
+  license: "license (BSD, MIT)"
+  min_ansible_version: 2.4
+  platforms:
+    - name: EL
+      versions:
+      - all
+    - name: Fedora
+      versions:
+      - all
+    - name: Debian
+      versions:
+      - all
+    - name: Ubuntu
+      versions:
+      - all
+    - name: FreeBSD
+      versions:
+      - all
+    - name: Suse
+      versions:
+      - all
+    - name: Archlinux
+      versions:
+      - all
+  galaxy_tags:
+    - system
+    - ntp
+    - date
+    - time
+    - timezone

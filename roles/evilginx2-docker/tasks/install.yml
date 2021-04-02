@@ -1,0 +1,5 @@
+---
+- name: Setting containers
+  include_tasks: "{{ item }}.yml"
+  with_items:
+    - evilginx2

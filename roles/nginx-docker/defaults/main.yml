@@ -1,0 +1,4 @@
+---
+nginx_dir: "{{ docker_home_dir }}/nginx"
+dns_plugin: "{{ dns }}"
+nginx_profile: 'phish'

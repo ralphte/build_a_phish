@@ -1,0 +1,24 @@
+  - name: Deploy Azure CDN
+    community.general.terraform:
+      project_path: '{{ terraform_project_path }}'
+      state: "{{ state }}"
+      targets:
+        - azurerm_resource_group.azure_resource
+        - azurerm_cdn_profile.cdn_profile
+        - azurerm_cdn_endpoint.cdn_endpoint_gophish
+        - azurerm_cdn_endpoint.cdn_endpoint_evilginx1
+        - azurerm_cdn_endpoint.cdn_endpoint_evilginx2
+      force_init: true
+      variables:
+        op: "{{ op_number }}"
+        cdn_origin_host_gophish: "{{ gophish_site_hostname }}.{{ domain_name }}"
+        cdn_profile_name: "{{ op_number }}"
+        cdn_endpoint_name_gophish: "{{ gophish_cdn_hostname }}"
+        cdn_endpoint_name_evilginx1: "{{ o365_login }}"
+        cdn_origin_host_evilginx1: "{{ hostvars[item].ansible_host }}"
+        cdn_origin_hostheader_evilginx1: "{{ o365_login }}.{{ cdn_domain }}"
+        cdn_endpoint_name_evilginx2: "{{ o365_www }}"
+        cdn_origin_hostheader_evilginx2: "{{ o365_www }}.{{ cdn_domain }}"
+        cdn_origin_host_evilginx2: "{{ hostvars[item].ansible_host }}"
+    with_items: "{{ groups['phish'] }}"
+    tags: [ never, phish ]

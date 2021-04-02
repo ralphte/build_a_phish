@@ -1,0 +1,23 @@
+- name: Deploy Mailgun Email Domain
+  community.general.terraform:
+    project_path: '{{ terraform_project_path }}'
+    state: "{{ state }}"
+    force_init: true
+    targets:
+      - digitalocean_tag.op_number
+      - digitalocean_tag.ttl
+      - digitalocean_ssh_key.ansible_ssh_key
+      - digitalocean_droplet.gophish_droplet
+      - local_file.phishInventory
+    variables:
+      do_token: "{{ digitalocean_token }}"
+      do_img: "ubuntu-20-04-x64"
+      do_name: "{{ user_tag }}-{{ op_number }}-phish"
+      do_region: "nyc1"
+      do_size: "s-2vcpu-4gb"
+      op: "{{ op_number }}"
+      ttl: "{{ ttl }}"
+      tl_domain: "{{ domain_name }}"
+      gophish_hostname: "{{ hostname }}"
+      ansible_ssh_key: "{{ lookup('file', '{{ ansible_ssh_public_key_file }}') }}"
+  tags: [ never, phish ]

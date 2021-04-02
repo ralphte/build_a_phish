@@ -1,0 +1,54 @@
+---
+
+- name: Setting user's home permission
+  file:
+    dest: "{{ user.home | default(users_home ~ '/' ~ user.username) }}"
+    owner: "{{ user.username }}"
+    group: "{{ user.group if user.group is defined else (users_group if users_group else user.username) }}"
+    mode: "{{ user.home_mode if user.home_mode is defined else users_home_mode }}"
+  when: not ansible_check_mode
+
+- name: Adding user's .ssh directory
+  file:
+    path: "{{ user.home | default(users_home ~ '/' ~ user.username) }}/.ssh"
+    owner: "{{ user.username }}"
+    group: "{{ user.group if user.group is defined else (users_group if users_group else user.username) }}"
+    state: directory
+    mode: '0700'
+
+- name: Adding user's private key
+  copy:
+    content: "{{ user.ssh_key }}"
+    dest: "{{ user.home | default(users_home ~ '/' ~ user.username) }}/.ssh/id_{{ user.ssh_key_type | default('rsa') }}"
+    owner: "{{ user.username }}"
+    group: "{{ user.group if user.group is defined else (users_group if users_group else user.username) }}"
+    mode: '0600'
+  when: user.ssh_key is defined
+  no_log: true
+
+- name: Adding user's private keys
+  copy:
+    content: "{{ item.value }}"
+    dest: "{{ user.home | default(users_home ~ '/' ~ user.username) }}/.ssh/{{ item.key }}"
+    owner: "{{ user.username }}"
+    group: "{{ user.group if user.group is defined else (users_group if users_group else user.username) }}"
+    mode: '0600'
+  when: user.ssh_key is not defined and user.ssh_keys is defined
+  with_dict: "{{ user.ssh_keys }}"
+
+- name: Adding user's authorized keys
+  authorized_key:
+    key: "{{ user.authorized_keys | default([]) | join('\n') }}"
+    user: "{{ user.username }}"
+    exclusive: "{{ user.authorized_keys_exclusive | default(users_authorized_keys_exclusive) }}"
+  when: not ansible_check_mode
+
+- name: Adding user's home files
+  copy:
+    src: "{{ home_file }}"
+    dest: "{{ user.home | default(users_home ~ '/' ~ user.username) }}/{{ home_file | basename }}"
+    owner: "{{ user.username }}"
+    group: "{{ user.group if user.group is defined else (users_group if users_group else user.username) }}"
+  with_items: "{{ user.home_files | default(users_home_files) }}"
+  loop_control:
+    loop_var: home_file

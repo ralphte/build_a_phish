@@ -1,0 +1,18 @@
+---
+- name: restart docker_evilginx2
+  docker_container:
+    name: evilginx2
+    hostname: evilginx
+    interactive: yes
+    image: warhorse/evilginx2:latest
+    pull: yes
+    state: started
+    entrypoint: "/bin/evilginx -p /phishlets -c /config -t /templates -debug -developer"
+    restart_policy: always
+    restart: yes
+    volumes:
+      - "{{ evilginx2_dir }}/config:/config"
+      - "{{ evilginx2_dir }}/phishlets:/phishlets"
+      - "{{ evilginx2_dir }}/templates:/templates"
+    networks:
+      - name: "{{ dockernet }}"

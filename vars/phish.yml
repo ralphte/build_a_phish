@@ -1,0 +1,44 @@
+---
+#Hostname
+hostname: "{{ op_number }}-gp"
+cs_hostname: '{{ hostname }}'
+
+#VM Provider
+vm: 'digitalocean'
+
+#Email
+email_enable: true
+email_service: 'mailgun'
+email_domian: ''
+
+# CDN
+cdn_enable: true
+cdn: 'azure'
+cdn_domain: 'azureedge.net'
+cdn_origin_host: '{{ hostname }}.{{ domain_name }}'
+
+#Gophish
+gophish_admin_hostname: 'gpadmin'
+gophish_site_hostname: 'gpredirect'
+gophish_cdn_hostname: 'mycompany-loading' #The hostname set for CDN example mycompany-loading.azureedge.net
+
+#Evilginx
+phishlet: 'o365'
+nginx_profile: 'phish'
+redirect_domain: 'azure.microsoft.com'
+o365_login: "mycompany-login"
+o365_www: "mycompany-www"
+
+# Host Firewall
+firewall_additional_rules:
+  - "iptables -A INPUT -p tcp --dport 22 -j ACCEPT"
+  - "iptables -A INPUT -p tcp --dport 443 -j ACCEPT"
+white_list_ip: '0.0.0.0' # White List IP Only for Web Administration
+
+# Extra Packages
+
+# packages: [
+#   - grep
+# ]
+
+#Advanced

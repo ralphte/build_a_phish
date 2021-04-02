@@ -1,0 +1,8 @@
+---
+#Email Domain
+- include: domian.yml
+    state="present"
+  when: email_service == 'mailgun' and deploy
+- include: domian.yml
+    state="absent"
+  when: email_service == 'mailgun' and not deploy

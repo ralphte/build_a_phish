@@ -1,0 +1,27 @@
+---
+
+- name: Adding primary group
+  group:
+    name: "{{ users_group }}"
+    state: present
+  when: users_group is defined and users_group
+
+- name: Adding secondary groups
+  group:
+    name: "{{ item }}"
+    state: present
+  with_items: "{{ users_groups | default([]) }}"
+
+- name: Configure users
+  include_tasks: manage_user.yml
+  with_items: "{{ users }}"
+  when: user.username != 'root'
+  loop_control:
+    loop_var: user
+
+- name: Removing users
+  user:
+    name: "{{ item.username if item.username is defined else item }}"
+    state: absent
+    remove: "{{ item.remove if item.remove is defined else omit }}"
+  with_items: "{{ users_remove }}"

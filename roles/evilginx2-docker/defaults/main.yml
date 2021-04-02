@@ -1,0 +1,2 @@
+evilginx2_dir: '{{docker_home_dir}}/evilginx2'
+evilginx2_hostname: 'evilginx'

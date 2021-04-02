@@ -1,0 +1,25 @@
+- name: restart docker_nginx
+  docker_container:
+    name: nginx-proxy
+    image: nginx:latest
+    state: started
+    hostname: nginx-proxy
+    restart: yes
+    restart_policy: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "{{ nginx_dir }}/config/nginx.conf:/etc/nginx/nginx.conf"
+      - "{{ nginx_dir }}/whitelist/:/etc/nginx/whitelist/"
+      - "{{ nginx_dir }}/config/options-ssl-nginx.conf:/etc/nginx/options-ssl-nginx.conf"
+      - "{{ nginx_dir }}/static:/static"
+      - "{{ nginx_dir }}/geo:/geo"
+      - "{{ nginx_dir }}/cache/:/etc/nginx/cache"
+      - "{{ nginx_dir }}/certs/etc/letsencrypt/:/etc/letsencrypt/"
+      - "{{ nginx_dir }}/logs/:/etc/nginx/log"
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - "/etc/localtime:/etc/localtime:ro"
+    networks:
+      - name: "{{ dockernet }}"
+    purge_networks: true

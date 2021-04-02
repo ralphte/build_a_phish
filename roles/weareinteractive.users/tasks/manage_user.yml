@@ -1,0 +1,27 @@
+---
+
+- name: "Adding user '{{ user.username }}' to the system"
+  user:
+    name: "{{ user.username }}"
+    uid: "{{ user.uid | default(omit) }}"
+    home: "{{ user.home | default(users_home ~ '/' ~ user.username ) }}"
+    comment: "{{ user.name | default(omit) }}"
+    system: "{{ user.system | default(omit) }}"
+    generate_ssh_key: "{{ user.ssh_key_generate | default(omit) }}"
+    group: "{{
+            omit if user.group is defined and user.group == user.username
+            else (user.group if user.group is defined else (users_group if users_group else omit))
+            }}"
+    groups: "{{ user.groups|join(',') if user.groups is defined else users_groups|join(',') }}"
+    append: "{{ user.append | default(omit) }}"
+    password: "{{ user.password | default(omit) }}"
+    ssh_key_file: ".ssh/id_{{ user.ssh_key_type | default(users_ssh_key_type) }}"
+    ssh_key_passphrase: "{{ user.ssh_key_password | default(omit) }}"
+    ssh_key_bits: "{{ user.ssh_key_bits | default(users_ssh_key_bits) }}"
+    createhome: "{{ user.home_create | default(users_home_create) }}"
+    shell: "{{ user.shell | default(users_shell | default(omit)) }}"
+    update_password: "{{ user.update_password | default(omit) }}"
+
+- name: Configuring user's home
+  import_tasks: manage_user_home.yml
+  when: user.home_create | default(users_home_create)

@@ -1,0 +1,26 @@
+---
+- name: Ensures gophish dir exists
+  file:
+    path: '{{ item }}'
+    state: directory
+  with_items:
+  - '{{ gophish_dir }}'
+  - '{{ gophish_dir }}/data'
+
+- name: gophish container
+  docker_container:
+    name: gophish
+    image: gophish/gophish
+    state: started
+    user: root
+    hostname: gophish
+    restart_policy: unless-stopped
+    env:
+      ADMIN_USE_TLS: "false"
+      PHISH_USE_TLS: "false"
+      DB_FILE_PATH: "/data/gophish.db"
+    volumes:
+      - "{{ gophish_dir }}/data:/data"
+      - "/etc/localtime:/etc/localtime:ro"
+    networks:
+      - name: "{{ dockernet }}"

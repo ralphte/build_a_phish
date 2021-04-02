@@ -1,0 +1,6 @@
+--- 
+- name: OS tools
+  apt:
+    pkg:
+    - net-tools
+    state: present

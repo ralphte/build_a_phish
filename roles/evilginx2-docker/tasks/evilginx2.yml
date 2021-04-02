@@ -1,0 +1,45 @@
+---
+- name: Ensures evilginx2 dir exists
+  file:
+    path: '{{ item }}'
+    state: directory
+  with_items:
+  - '{{ evilginx2_dir }}'
+  - '{{ evilginx2_dir }}/phishlets'
+  - '{{ evilginx2_dir }}/config'
+  - '{{ evilginx2_dir }}/templates'
+
+- name: Phishlets templet
+  template:
+    src: "{{ phishlet }}.yaml.j2"
+    dest: "{{ evilginx2_dir }}/phishlets/{{ phishlet }}.yaml"
+    owner: root
+    mode: 777
+  notify:
+     - restart docker_evilginx2
+  
+- name: Config templet
+  template:
+    src: "config.yaml.j2"
+    dest: "{{ evilginx2_dir }}/config/config.yaml"
+    owner: root
+    mode: 777
+  notify:
+     - restart docker_evilginx2
+
+- name: Evilginx2
+  docker_container:
+    name: evilginx2
+    hostname: 'evilginx'
+    interactive: yes
+    image: warhorse/evilginx2:latest
+    pull: yes
+    state: started
+    entrypoint: "/bin/evilginx -p /phishlets -c /config -t /templates -debug -developer"
+    restart_policy: always
+    volumes:
+      - "{{ evilginx2_dir }}/config:/config"
+      - "{{ evilginx2_dir }}/phishlets:/phishlets"
+      - "{{ evilginx2_dir }}/templates:/templates"
+    networks:
+      - name: "{{ dockernet }}"

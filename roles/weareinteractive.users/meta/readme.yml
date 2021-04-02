@@ -1,0 +1,18 @@
+---
+
+galaxy_name: weareinteractive.users
+github_user: weareinteractive
+github_name: ansible-users
+badges: |
+  [![Build Status](https://img.shields.io/travis/weareinteractive/ansible-users.svg)](https://travis-ci.org/weareinteractive/ansible-users)
+  [![Galaxy](http://img.shields.io/badge/galaxy-weareinteractive.users-blue.svg)](https://galaxy.ansible.com/weareinteractive/users)
+  [![GitHub tag](https://img.shields.io/github/tag/weareinteractive/ansible-users.svg)](https://github.com/weareinteractive/ansible-users/releases)
+  [![GitHub stars](https://img.shields.io/github/stars/weareinteractive/ansible-users.svg?style=social&label=Star)](https://github.com/weareinteractive/ansible-users)
+description: |
+  > * manges users
+  > * manages user's private key
+  > * manages user's authorized keys
+
+  **Note:**
+
+  > Since Ansible Galaxy switched all role names to the organization name, this role has moved from `franklinkim.users` to `weareinteractive.users`!

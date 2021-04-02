@@ -1,0 +1,8 @@
+---
+- include: upgrade.yml
+- include: network.yml
+- include: tmp-fs.yml
+- include: swap.yml
+- include: locale.yml
+- include: zsh.yml
+- include: motd.yml

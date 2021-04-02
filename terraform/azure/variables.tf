@@ -1,0 +1,11 @@
+variable "op" { default = "none" }
+variable "ttl" { default = "none" }
+variable "cdn_profile_name" { default = "none" }
+variable "cdn_endpoint_name_gophish"{ default = "none" }
+variable "cdn_origin_host_gophish" { default = "none" }
+variable "cdn_endpoint_name_evilginx1"{ default = "none" }
+variable "cdn_origin_host_evilginx1" { default = "none" }
+variable "cdn_endpoint_name_evilginx2"{ default = "none" }
+variable "cdn_origin_host_evilginx2" { default = "none" }
+variable "cdn_origin_hostheader_evilginx1" { default = "none" }
+variable "cdn_origin_hostheader_evilginx2" { default = "none" }

@@ -1,0 +1,79 @@
+---
+###############################################################################
+#
+# This will install the latest Docker CE (if it was not already installed)
+#
+###############################################################################
+- name: Determine if Docker was already installed
+  shell: which docker
+  register: docker_cmd_available
+  ignore_errors: yes
+  changed_when: False
+
+- name: Set fact docker_installed
+  set_fact:
+    docker_installed={{ docker_cmd_available.rc == 0 }}
+  when: docker_cmd_available is defined and docker_cmd_available.rc is defined
+  changed_when: False
+
+- name: Install the dependencies of Docker CE
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - 'apt-transport-https'
+    - 'ca-certificates'
+    - 'curl'
+    - 'software-properties-common'
+  when: not docker_installed
+
+- name: Add Docker's official GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+  when: not docker_installed and ansible_distribution == 'Ubuntu'
+
+- name: Add Docker stable repository
+  shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  when: not docker_installed and ansible_distribution == 'Ubuntu'
+
+- name: Add Docker's official GPG key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+  when: not docker_installed and ansible_distribution == 'Debian'
+
+- name: Add Docker stable repository
+  shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+  when: not docker_installed and ansible_distribution == 'Debian'
+
+- name: Install Docker CE
+  apt:
+    name: docker-ce
+    update_cache: true
+    state: present
+  when: not docker_installed
+
+- name: Create the Docker group
+  group:
+    name: docker
+    state: present
+
+- name: Add users to the Docker group
+  user:
+    name: "{{ item.username }}" 
+    groups: docker
+    append: yes
+  with_items: "{{ users }}"
+
+- name: Containers internal network
+  docker_network:
+    name: "{{ dockernet }}"
+    attachable: "yes"
+    ipam_config:
+    - subnet: 172.3.27.0/24
+      gateway: 172.3.27.2
+      iprange: 172.3.27.0/26
+      aux_addresses:
+        host1: 172.3.27.3
+        host2: 172.3.27.4

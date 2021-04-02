@@ -1,0 +1,88 @@
+---
+- name: Deploy Terraform
+  hosts: localhost
+  gather_facts: true
+  connection: local
+  vars_files:
+    - ../vars/all.yml
+    - ../vars/phish.yml
+  vars: 
+  - deploy: true
+  tasks:
+  - name: Create a keys directory 
+    ansible.builtin.file:
+      path: ../keys
+      state: directory
+      mode: '0755'
+  - name: Create SSH Keys
+    community.crypto.openssh_keypair:
+      path: ../keys/id_rsa_ansible
+      size: 2048
+  tags: [ never, phish ]
+
+- name: Deploy Terraform
+  hosts: localhost
+  gather_facts: true
+  connection: local
+  vars_files:
+    - ../vars/all.yml
+    - ../vars/phish.yml
+  vars: 
+  - deploy: true
+  tasks:
+  - name: roles
+    include_role:
+      name: '{{ roleinputvar }}'
+    loop:
+      - digitalocean
+      - azure
+      # - mailgun
+    loop_control:
+      loop_var: roleinputvar
+    tags: [ never, phish ]
+
+- name: Refresh Inventory
+  hosts: localhost
+  tasks:
+  - meta: refresh_inventory
+  - name: Wait for system to become reachable again
+    wait_for_connection:
+        delay: 10
+        timeout: 300
+  tags: [ never, phish ]
+
+- name: Install Roles
+  gather_facts: True
+  hosts: phish
+  connection: ssh
+  become: True
+  vars_files:
+    - ../vars/all.yml
+    - ../vars/phish.yml
+  vars:
+    pip_install_packages:
+      - name: docker
+  roles:
+    - { role: weareinteractive.users }
+    - { role: os }
+    - { role: geerlingguy.pip }
+    - { role: geerlingguy.ntp }
+    - { role: geerlingguy.security }
+    - { role: geerlingguy.firewall }
+    - { role: docker }
+    - { role: viasite-ansible.zsh, zsh_shared: yes}
+  tags: [ never, phish ]
+
+- name: Install Containers
+  gather_facts: True
+  hosts: phish
+  connection: ssh
+  become: True
+  vars_files:
+    - ../vars/all.yml
+    - ../vars/phish.yml
+  roles:
+    - { role: nginx-docker }
+    - { role: gophish-docker, gophish }
+    - { role: evilginx2-docker, evilginx2 }
+  tags: [ never, phish, gophish, evilginx2 ]

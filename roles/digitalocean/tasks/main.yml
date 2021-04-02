@@ -1,0 +1,19 @@
+---
+#Droplet
+- include: droplet_deploy.yml
+    state="present"
+  when: vm == 'digitalocean' and deploy
+- include: droplet_destroy.yml
+    state="absent"
+  when: vm == 'digitalocean' and not deploy
+
+- name: Refresh Inventory
+  meta: refresh_inventory
+
+#DNS
+- include: dns_deploy.yml
+    state="present"
+  when: dns == 'digitalocean' and deploy
+- include: dns_destroy.yml
+    state="absent"
+  when: dns == 'digitalocean' and not deploy

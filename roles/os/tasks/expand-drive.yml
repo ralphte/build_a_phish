@@ -1,0 +1,40 @@
+---
+- name: Get partition information
+  parted:
+    device: '{{dev}}'
+  register: partinfo
+  become: yes
+
+- name: "Create a new partition after {{partinfo.partitions[-1].end}}KiB"
+  parted:
+    part_start: "{{ partinfo.partitions[-1].end }}KiB"
+    device: "{{ dev }}"
+    number: '{{ partinfo.partitions[-1].num + 1 }}'
+    flags: [ lvm ]
+    state: present
+  when: partinfo.disk.size != partinfo.partitions[-1].end
+
+- name: Probe kernel about partition table changes
+  command: partprobe
+  become: yes
+  when: partinfo.disk.size != partinfo.partitions[-1].end
+
+- name: Add the partition to the volume group
+  lvg:
+    vg: "{{vg_name}}"
+    pvs: "{{dev}}{{partinfo.partitions[-1].num}},{{dev}}{{partinfo.partitions[-1].num + 1}}"
+  when: partinfo.disk.size != partinfo.partitions[-1].end
+
+- name: Extend LVM to the whole volume group
+  lvol:
+    vg: "{{vg_name}}"
+    lv: "{{lv_name}}"
+    size: +100%FREE
+  when: partinfo.disk.size != partinfo.partitions[-1].end
+
+- name: Extend the filesystem
+  filesystem:
+    fstype: ext4
+    dev: "/dev/mapper/vagrant--vg-root"
+    resizefs: yes
+  when: partinfo.disk.size != partinfo.partitions[-1].end

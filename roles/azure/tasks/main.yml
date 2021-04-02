@@ -1,0 +1,8 @@
+---
+#CDN
+- include: cdn_deploy.yml
+    state="present"
+  when: cdn == 'azure' and deploy
+- include: cdn_destroy.yml
+    state="absent"
+  when: cdn == 'azure' and not deploy

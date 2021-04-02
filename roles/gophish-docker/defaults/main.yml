@@ -1,0 +1,2 @@
+---
+gophish_dir: "{{docker_home_dir}}/gophish"
