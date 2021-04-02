@@ -2,7 +2,7 @@
 
 # Build_A_Phish
 
-![GitHub](https://img.shields.io/github/license/ralphte/build_a_phish) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/ralphte/build_a_phish) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ralphte/build_a_phish)
+![GitHub Stars](https://img.shields.io/github/stars/ralphte/build_a_phish?style=social) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/ralphte/build_a_phish) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ralphte/build_a_phish) ![GitHub Contributors](https://img.shields.io/github/contributors/ralphte/build_a_phish?style=plastic) 
 
 Table of contents 
 ------------------
