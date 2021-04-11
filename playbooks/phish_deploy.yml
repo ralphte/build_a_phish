@@ -83,6 +83,7 @@
     - ../vars/phish.yml
   roles:
     - { role: nginx-docker }
-    - { role: gophish-docker, gophish }
-    - { role: evilginx2-docker, evilginx2 }
-  tags: [ never, phish, gophish, evilginx2 ]
+    - { role: gophish-docker, tags: gophish }
+    - { role: evilginx2-docker, tags: evilginx2 }
+    - { role: mitmproxy-docker, tags: mitmproxy }
+  tags: [ never, phish ]

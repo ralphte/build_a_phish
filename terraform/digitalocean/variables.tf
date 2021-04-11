@@ -10,4 +10,5 @@ variable "ansible_ssh_key" { default = "" }
 variable "gophish_hostname" { default = "" }
 variable "gpadmin_hostname" { default = "" }
 variable "gpredirect_hostname" { default = "" }
+variable "mitmproxy_hostname" { default = "" }
 variable "ansible_ssh_key_private" { default = "" }

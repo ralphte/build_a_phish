@@ -1,0 +1,2 @@
+mitmproxy_dir: '{{docker_home_dir}}/mitmproxy'
+mitmproxy_hostname: 'mitmproxy'

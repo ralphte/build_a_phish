@@ -30,6 +30,7 @@ Build a Phish consist of a Ansible playbook to deploy a phishing engagement in t
 |  <img src='https://raw.githubusercontent.com/kgretzky/evilginx2/master/media/img/evilginx2-logo-512.png' width='40'>                                                                                                                         | Evilginx2  | [warhorse/evilginx2](https://github.com/warhorse/docker-evilginx2)|
 | <img src='https://github.com/gophish/gophish/raw/master/static/images/logo_purple.png' width='40'>                                                                                                                             | Gophish     | [gophish/gophish](https://github.com/gophish/gophish)|
 | <img src='https://d1q6f0aelx0por.cloudfront.net/product-logos/library-nginx-logo.png' width='40'>                                                                                                                             | Nginx    | [nginx](https://hub.docker.com/_/nginx)|
+| <img src='https://avatars.githubusercontent.com/u/4652787?s=280&v=4' width='40'>                                                                                                                             | Mitmproxy    | [mitmproxy](https://hub.docker.com/r/mitmproxy/mitmproxy/)|
 
 ## Supported Cloud Providers
 
@@ -63,31 +64,36 @@ Coming Soon
 You will need a managment domain. This domian can be the same domian used for phishing emails. After you buy a domain set the name server records to Digital Ocean.
 
 
-1. Install Ansible & Terraform
+### 1. Install Ansible & Terraform
+#### Ansible
+- OSX 
+  
+  `brew install ansible`
 
-    Ansible
-    - OSX `brew install ansible`
-    - Linux `pip install ansible`
-    - Install Ansible General Modules 
+- Linux 
+  
+  `pip install ansible`
 
-        `ansible-galaxy collection install community.general`
+- Install Ansible General Modules 
 
-    Terraform
-    - OSX `brew install terraform`
-    - Linux https://learn.hashicorp.com/tutorials/terraform/install-cli
+`ansible-galaxy collection install community.general`
 
-2. Git clone this repo 
+#### Terraform
+- OSX `brew install terraform`
+- Linux https://learn.hashicorp.com/tutorials/terraform/install-cli
 
-    `git clone https://github.com/ralphte/build_a_phish`
+### 2. Git clone this repo 
 
-3. Customize the variables inside the vars folder.
+`git clone https://github.com/ralphte/build_a_phish`
+
+### 3. Customize the variables inside the vars folder.
    
 
-4. Create API keys for both Digital Ocean & Azure.
+### 4. Create API keys for both Digital Ocean & Azure.
    
-    - Digital Ocean API Key https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/#:~:text=To%20generate%20a%20personal%20access,the%20Generate%20New%20Token%20button.
+- Digital Ocean API Key https://www.digitalocean.com/docs/apis-clis/api/create-personal-access-token/#:~:text=To%20generate%20a%20personal%20access,the%20Generate%20New%20Token%20button.
 
-    - Azure CLI https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
+- Azure CLI https://docs.microsoft.com/en-us/cli/azure/install-azure-cli
 
 ## Usage
  
@@ -127,6 +133,12 @@ To get the password on first login check the docker logs
 
 `docker logs gophish`
 
+### Mitmproxy
+
+You can access Mitmproxy via the hostname set for "mitmproxy_hostname"
+
+The mitmproxy web interface allows you to see the RAW traffic between evilginx2 and your target server. You can use this to check for problems and remove any IOC's. Mitmproxy is a dignostic tool to inspect https traffic.
+
 ## Development
 
 Does none of this work for you? Submit a issue and I will see what the problem is.
@@ -138,6 +150,8 @@ Want to add a cool new feature shoot me that sweet pull request.
 Gophish https://getgophish.com/
 
 Evilginx https://github.com/kgretzky/evilginx2
+
+Mitmproxy https://github.com/mitmproxy/mitmproxy
 
 Ansible roles from https://github.com/geerlingguy
 

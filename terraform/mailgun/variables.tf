@@ -1,12 +1,3 @@
-variable "do_token" { default = "" }
-variable "do_img" { default = "" }
-variable "do_name" { default = "" }
-variable "do_region" { default = "nyc1" }
-variable "do_size" { default = "" }
-variable "op" { default = "" }
-variable "ttl" { default = "" }
-variable "tl_domain" { default = "" }
-variable "ansible_ssh_key" { default = "" }
-variable "gophish_hostname" { default = "" }
-variable "gpadmin_hostname" { default = "" }
-variable "gpredirect_hostname" { default = "" }
+variable "mailgun_api_key" { default = "" }
+variable "mailgun_smtp_password" { default = "" }
+variable "mailgun_domain" { default = "" }

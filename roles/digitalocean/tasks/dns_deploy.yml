@@ -8,11 +8,13 @@
       - digitalocean_record.gophish_hostname
       - digitalocean_record.gpadmin_hostname
       - digitalocean_record.gpredirect_hostname
+      - digitalocean_record.mitmproxy_hostname
       - digitalocean_domain.domain
     variables:
       do_token: "{{ digitalocean_token }}"
       gophish_hostname: "{{ gophish_site_hostname }}"
       gpadmin_hostname: "{{ gophish_admin_hostname }}"
+      mitmproxy_hostname: "{{ mitmproxy_hostname }}"
       tl_domain: "{{ domain_name }}"
       do_img: "ubuntu-20-04-x64"
       do_name: "{{ user_tag }}-{{ op_number }}-phish"

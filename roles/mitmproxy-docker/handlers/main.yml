@@ -1,0 +1,16 @@
+---
+- name: Restart docker_mitmproxy
+  docker_container:
+    name: mitmproxy
+    hostname: 'mitmproxy'
+    interactive: yes
+    image: mitmproxy/mitmproxy:4.0.3
+    pull: yes
+    state: started
+    command: "mitmweb --web-iface 0.0.0.0 --no-web-open-browser --ssl-insecure -v"
+    restart_policy: always
+    restart: yes
+    volumes:
+      - "{{ mitmproxy_dir }}/config:/home/mitmproxy/.mitmproxy"
+    networks:
+      - name: "{{ dockernet }}"

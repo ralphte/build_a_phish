@@ -24,6 +24,13 @@ resource "digitalocean_record" "gpadmin_hostname" {
   value  = digitalocean_droplet.phish_droplet.ipv4_address
 }
 
+resource "digitalocean_record" "mitmproxy_hostname" {
+  domain = digitalocean_domain.domain.name
+  type   = "A"
+  name   = var.mitmproxy_hostname
+  value  = digitalocean_droplet.phish_droplet.ipv4_address
+}
+
 resource "digitalocean_ssh_key" "ansible_ssh_key" {
   name       = "Ansible SSH Key ${var.op}"
   public_key = var.ansible_ssh_key

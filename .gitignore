@@ -43,6 +43,7 @@ builds/**/images/*
 *.ogg
 *.mp3
 *.mp4
+*.io
 TODO.txt
 
 # security / ssl
@@ -62,3 +63,7 @@ digital_ocean_phish
 
 # keys
 keys/*
+
+# vars
+vars/all.yml
+vars/phish.yml

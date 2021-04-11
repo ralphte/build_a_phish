@@ -1,0 +1,23 @@
+---
+- name: Ensures mitmproxy dir exists
+  file:
+    path: '{{ item }}'
+    state: directory
+  with_items:
+  - '{{ mitmproxy_dir }}'
+  - '{{ mitmproxy_dir }}/config'
+
+- name: Mitmproxy
+  docker_container:
+    name: mitmproxy
+    hostname: 'mitmproxy'
+    interactive: yes
+    image: mitmproxy/mitmproxy:4.0.3
+    pull: yes
+    state: started
+    command: "mitmweb --web-iface 0.0.0.0 --no-web-open-browser --ssl-insecure --set block_global=false" 
+    restart_policy: always
+    volumes:
+      - "{{ mitmproxy_dir }}/config:/home/mitmproxy/.mitmproxy"
+    networks:
+      - name: "{{ dockernet }}"
