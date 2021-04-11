@@ -3,19 +3,24 @@
 hostname: "{{ op_number }}-gp"
 cs_hostname: '{{ hostname }}'
 
-#VM Provider
+#VM Provider to use
 vm: 'digitalocean'
 
 #Email
 email_enable: true
 email_service: 'mailgun'
-email_domian: ''
+mailgun_domian: ''
+mailgun_api: ''
+mailgun_smtp_password: ''
 
 # CDN
 cdn_enable: true
 cdn: 'azure'
 cdn_domain: 'azureedge.net'
 cdn_origin_host: '{{ hostname }}.{{ domain_name }}'
+
+#Man In The Middle Proxy
+mitmproxy_hostname: "mitm"
 
 #Gophish
 gophish_admin_hostname: 'gpadmin'
@@ -26,6 +31,8 @@ gophish_cdn_hostname: 'mycompany-loading' #The hostname set for CDN example myco
 phishlet: 'o365'
 nginx_profile: 'phish'
 redirect_domain: 'azure.microsoft.com'
+
+#Office365 Phishlet
 o365_login: "mycompany-login"
 o365_www: "mycompany-www"
 
