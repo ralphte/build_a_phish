@@ -23,12 +23,19 @@ users:
     append: yes
     home_mode: "0750"
     shell: '/usr/bin/zsh'
-users_authorized_keys_exclusive: yes
+  # - username: Razor
+  #   name: Razor
+  #   authorized_keys:
+  #     - "{{ lookup('file', '~/.ssh/id_rsa') }}"
+  #   home_create: yes
+  #   append: yes
+  #   home_mode: "0750"
+  #   shell: '/usr/bin/zsh'users_authorized_keys_exclusive: yes
 security_sudoers_passwordless:
     - ralph
 
 
-## EVERYTHING BLOW DOES NOT NEED TO BE CHNAGED
+## EVERYTHING BLOW DOES NOT NEED TO BE CHANGED
 
 #Ansible Settings
 src_files: '../files'
