@@ -2,23 +2,23 @@
 # Project Settings
 op_number: "2021-0123" #Number to identify engagment
 ttl: '2021-03-30' #This is Time To Live
-user_tag: "rmay" #This will be a tag used for cloud reasources
+user_tag: "CHANGEME" #This will be a tag used for cloud reasources
 
 # DNS
 dns: 'digitalocean'
-domain_name: 'managment.com'
+domain_name: 'CHANGEME.com'
 
 #Digital Ocean
-digitalocean_token:  "{{lookup('community.general.lastpass', 'Business/Digitalocean', field='token' )}}"
+digitalocean_token:  "CHANGEME" #{{lookup('community.general.lastpass', 'Business/Digitalocean', field='token' )}}
 digitalocean_region: "nyc1"
 digitalocean_size: "s-2vcpu-4gb"
 
 #OS Users
 users:
-  - username: ralph
-    name: Ralph May
+  - username: CHANGEME
+    name: CHNAGEME
     authorized_keys:
-      - "https://github.com/ralphte.keys"
+      - "https://github.com/USERNAME.keys"
     home_create: yes
     append: yes
     home_mode: "0750"
