@@ -14,7 +14,7 @@ Table of contents
   
 ## Overview
 
-Build a Phish consist of a Ansible playbook to deploy a phishing engagement in the cloud. The Playbook combines both Terraform & Ansible to deploy and configure virtual machines for different use cases. This playbook is highly customizable and includes operational security out of box. The design of this playbook is much more then automation. This playbook implements real world TTP’s to improve OPSEC, lower operational cost and speedup deployment time. This project is the real-world demonstration from the Black Hills Information Security Webcast “How to Build a Phishing Engagement - Coding TTP's”
+Build a Phish consist of a Ansible playbook to deploy a phishing engagement in the cloud. The Playbook combines both Terraform & Ansible to deploy and configure virtual machines for different use cases. This playbook is highly customizable and includes operational security out of box. The design of this playbook is much more than automation. This playbook implements real world TTP’s to improve OPSEC, lower operational cost and speedup deployment time. This project is the real-world demonstration from the Black Hills Information Security Webcast “How to Build a Phishing Engagement - Coding TTP's”
 
 ## Features
 
@@ -61,7 +61,7 @@ Coming Soon
 ## Setup
 
 ### DNS records
-You will need a managment domain. This domian can be the same domian used for phishing emails. After you buy a domain set the name server records to Digital Ocean.
+You will need a managment domain. This domain can be the same domian used for phishing emails. After you buy a domain set the name server records to Digital Ocean.
 
 
 ### 1. Install Ansible & Terraform
