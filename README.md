@@ -41,7 +41,7 @@ Build a Phish consist of a Ansible playbook to deploy a phishing engagement in t
 
 ## Webcast
 
-Coming Soon
+https://www.youtube.com/watch?v=VglCgoIjztE
 
 ## Blog Post
 
