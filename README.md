@@ -1,5 +1,9 @@
 ![Build A Phish Logo](/images/build_a_phish_lego.png)
 
+# Archived
+
+I have archived this project. Please use [Warhorse](https://github.com/warhorse/warhorse) which is a continuation of this project.
+
 # Build_A_Phish
 
 ![GitHub Stars](https://img.shields.io/github/stars/ralphte/build_a_phish?style=social) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/ralphte/build_a_phish) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/ralphte/build_a_phish) ![GitHub Contributors](https://img.shields.io/github/contributors/ralphte/build_a_phish?style=plastic) 
